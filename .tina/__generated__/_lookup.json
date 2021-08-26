@@ -3,10 +3,8 @@
     "type": "DocumentConnection",
     "resolveType": "multiCollectionDocumentList",
     "collections": [
-      "posts",
-      "global",
-      "authors",
-      "pages"
+      "item",
+      "page"
     ]
   },
   "Node": {
@@ -104,5 +102,25 @@
     "type": "GlobalConnection",
     "resolveType": "collectionDocumentList",
     "collection": "global"
+  },
+  "ItemDocument": {
+    "type": "ItemDocument",
+    "resolveType": "collectionDocument",
+    "collection": "item"
+  },
+  "ItemConnection": {
+    "type": "ItemConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "item"
+  },
+  "PageDocument": {
+    "type": "PageDocument",
+    "resolveType": "collectionDocument",
+    "collection": "page"
+  },
+  "PageConnection": {
+    "type": "PageConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "page"
   }
 }

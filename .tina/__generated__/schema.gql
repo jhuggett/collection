@@ -45,14 +45,10 @@ type Query {
   node(id: String): Node!
   getDocument(collection: String, relativePath: String): DocumentNode!
   getDocumentList(before: String, after: String, first: Int, last: Int): DocumentConnection!
-  getPostsDocument(relativePath: String): PostsDocument!
-  getPostsList(before: String, after: String, first: Int, last: Int): PostsConnection!
-  getGlobalDocument(relativePath: String): GlobalDocument!
-  getGlobalList(before: String, after: String, first: Int, last: Int): GlobalConnection!
-  getAuthorsDocument(relativePath: String): AuthorsDocument!
-  getAuthorsList(before: String, after: String, first: Int, last: Int): AuthorsConnection!
-  getPagesDocument(relativePath: String): PagesDocument!
-  getPagesList(before: String, after: String, first: Int, last: Int): PagesConnection!
+  getItemDocument(relativePath: String): ItemDocument!
+  getItemList(before: String, after: String, first: Int, last: Int): ItemConnection!
+  getPageDocument(relativePath: String): PageDocument!
+  getPageList(before: String, after: String, first: Int, last: Int): PageConnection!
 }
 
 type DocumentConnectionEdges {
@@ -78,331 +74,82 @@ type Collection {
   documents(before: String, after: String, first: Int, last: Int): DocumentConnection!
 }
 
-union DocumentNode = PostsDocument | GlobalDocument | AuthorsDocument | PagesDocument
+union DocumentNode = ItemDocument | PageDocument
 
-union PostsAuthorDocument = AuthorsDocument
+type Item {
+  name: String
+  year: Int
+  images: [String]
+  description: String
+}
 
-type Posts {
+type ItemDocument implements Node & Document {
+  id: ID!
+  sys: SystemInfo!
+  data: Item!
+  form: JSON!
+  values: JSON!
+  dataJSON: JSON!
+}
+
+type ItemConnectionEdges {
+  cursor: String
+  node: ItemDocument
+}
+
+type ItemConnection implements Connection {
+  pageInfo: PageInfo
+  totalCount: Int!
+  edges: [ItemConnectionEdges]
+}
+
+type Page {
   title: String
-  author: PostsAuthorDocument
-  date: String
-  heroImg: String
-  excerpt: String
   body: String
 }
 
-type PostsDocument implements Node & Document {
+type PageDocument implements Node & Document {
   id: ID!
   sys: SystemInfo!
-  data: Posts!
+  data: Page!
   form: JSON!
   values: JSON!
   dataJSON: JSON!
 }
 
-type PostsConnectionEdges {
+type PageConnectionEdges {
   cursor: String
-  node: PostsDocument
+  node: PageDocument
 }
 
-type PostsConnection implements Connection {
+type PageConnection implements Connection {
   pageInfo: PageInfo
   totalCount: Int!
-  edges: [PostsConnectionEdges]
-}
-
-type GlobalHeaderIcon {
-  color: String
-  style: String
-  name: String
-}
-
-type GlobalHeaderNav {
-  href: String
-  label: String
-}
-
-type GlobalHeader {
-  icon: GlobalHeaderIcon
-  color: String
-  nav: [GlobalHeaderNav]
-}
-
-type GlobalFooterSocial {
-  facebook: String
-  twitter: String
-  instagram: String
-  github: String
-}
-
-type GlobalFooter {
-  color: String
-  social: GlobalFooterSocial
-}
-
-type GlobalTheme {
-  color: String
-  font: String
-  icon: String
-  darkMode: String
-}
-
-type Global {
-  header: GlobalHeader
-  footer: GlobalFooter
-  theme: GlobalTheme
-}
-
-type GlobalDocument implements Node & Document {
-  id: ID!
-  sys: SystemInfo!
-  data: Global!
-  form: JSON!
-  values: JSON!
-  dataJSON: JSON!
-}
-
-type GlobalConnectionEdges {
-  cursor: String
-  node: GlobalDocument
-}
-
-type GlobalConnection implements Connection {
-  pageInfo: PageInfo
-  totalCount: Int!
-  edges: [GlobalConnectionEdges]
-}
-
-type Authors {
-  name: String
-  avatar: String
-}
-
-type AuthorsDocument implements Node & Document {
-  id: ID!
-  sys: SystemInfo!
-  data: Authors!
-  form: JSON!
-  values: JSON!
-  dataJSON: JSON!
-}
-
-type AuthorsConnectionEdges {
-  cursor: String
-  node: AuthorsDocument
-}
-
-type AuthorsConnection implements Connection {
-  pageInfo: PageInfo
-  totalCount: Int!
-  edges: [AuthorsConnectionEdges]
-}
-
-type PagesBlocksHeroActions {
-  label: String
-  type: String
-  icon: Boolean
-  link: String
-}
-
-type PagesBlocksHeroImage {
-  src: String
-  alt: String
-}
-
-type PagesBlocksHero {
-  tagline: String
-  headline: String
-  text: String
-  actions: [PagesBlocksHeroActions]
-  image: PagesBlocksHeroImage
-  color: String
-}
-
-type PagesBlocksFeaturesItemsIcon {
-  color: String
-  style: String
-  name: String
-}
-
-type PagesBlocksFeaturesItems {
-  icon: PagesBlocksFeaturesItemsIcon
-  title: String
-  text: String
-}
-
-type PagesBlocksFeatures {
-  items: [PagesBlocksFeaturesItems]
-  color: String
-}
-
-type PagesBlocksContent {
-  body: String
-  color: String
-}
-
-type PagesBlocksTestimonial {
-  quote: String
-  author: String
-  color: String
-}
-
-union PagesBlocks = PagesBlocksHero | PagesBlocksFeatures | PagesBlocksContent | PagesBlocksTestimonial
-
-type Pages {
-  blocks: [PagesBlocks]
-}
-
-type PagesDocument implements Node & Document {
-  id: ID!
-  sys: SystemInfo!
-  data: Pages!
-  form: JSON!
-  values: JSON!
-  dataJSON: JSON!
-}
-
-type PagesConnectionEdges {
-  cursor: String
-  node: PagesDocument
-}
-
-type PagesConnection implements Connection {
-  pageInfo: PageInfo
-  totalCount: Int!
-  edges: [PagesConnectionEdges]
+  edges: [PageConnectionEdges]
 }
 
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String!, relativePath: String!, params: DocumentMutation!): DocumentNode!
-  updatePostsDocument(relativePath: String!, params: PostsMutation!): PostsDocument!
-  updateGlobalDocument(relativePath: String!, params: GlobalMutation!): GlobalDocument!
-  updateAuthorsDocument(relativePath: String!, params: AuthorsMutation!): AuthorsDocument!
-  updatePagesDocument(relativePath: String!, params: PagesMutation!): PagesDocument!
+  updateItemDocument(relativePath: String!, params: ItemMutation!): ItemDocument!
+  updatePageDocument(relativePath: String!, params: PageMutation!): PageDocument!
 }
 
 input DocumentMutation {
-  posts: PostsMutation
-  global: GlobalMutation
-  authors: AuthorsMutation
-  pages: PagesMutation
+  item: ItemMutation
+  page: PageMutation
 }
 
-input PostsMutation {
+input ItemMutation {
+  name: String
+  year: Int
+  images: [String]
+  description: String
+}
+
+input PageMutation {
   title: String
-  author: String
-  date: String
-  heroImg: String
-  excerpt: String
   body: String
-}
-
-input GlobalHeaderIconMutation {
-  color: String
-  style: String
-  name: String
-}
-
-input GlobalHeaderNavMutation {
-  href: String
-  label: String
-}
-
-input GlobalHeaderMutation {
-  icon: GlobalHeaderIconMutation
-  color: String
-  nav: [GlobalHeaderNavMutation]
-}
-
-input GlobalFooterSocialMutation {
-  facebook: String
-  twitter: String
-  instagram: String
-  github: String
-}
-
-input GlobalFooterMutation {
-  color: String
-  social: GlobalFooterSocialMutation
-}
-
-input GlobalThemeMutation {
-  color: String
-  font: String
-  icon: String
-  darkMode: String
-}
-
-input GlobalMutation {
-  header: GlobalHeaderMutation
-  footer: GlobalFooterMutation
-  theme: GlobalThemeMutation
-}
-
-input AuthorsMutation {
-  name: String
-  avatar: String
-}
-
-input PagesBlocksHeroActionsMutation {
-  label: String
-  type: String
-  icon: Boolean
-  link: String
-}
-
-input PagesBlocksHeroImageMutation {
-  src: String
-  alt: String
-}
-
-input PagesBlocksHeroMutation {
-  tagline: String
-  headline: String
-  text: String
-  actions: [PagesBlocksHeroActionsMutation]
-  image: PagesBlocksHeroImageMutation
-  color: String
-}
-
-input PagesBlocksFeaturesItemsIconMutation {
-  color: String
-  style: String
-  name: String
-}
-
-input PagesBlocksFeaturesItemsMutation {
-  icon: PagesBlocksFeaturesItemsIconMutation
-  title: String
-  text: String
-}
-
-input PagesBlocksFeaturesMutation {
-  items: [PagesBlocksFeaturesItemsMutation]
-  color: String
-}
-
-input PagesBlocksContentMutation {
-  body: String
-  color: String
-}
-
-input PagesBlocksTestimonialMutation {
-  quote: String
-  author: String
-  color: String
-}
-
-input PagesBlocksMutation {
-  hero: PagesBlocksHeroMutation
-  features: PagesBlocksFeaturesMutation
-  content: PagesBlocksContentMutation
-  testimonial: PagesBlocksTestimonialMutation
-}
-
-input PagesMutation {
-  blocks: [PagesBlocksMutation]
 }
 
 schema {

@@ -1,7 +1,6 @@
 import "../styles.css";
 import dynamic from "next/dynamic";
 import { TinaEditProvider } from "tinacms/dist/edit-state";
-import { Layout } from "../components/layout";
 const TinaCMS = dynamic(() => import("tinacms"), { ssr: false });
 import { TinaCloudCloudinaryMediaStore } from "next-tinacms-cloudinary";
 
@@ -30,16 +29,16 @@ const App = ({ Component, pageProps }) => {
                * After a new document is created, redirect to its location
                */
               onNewDocument: ({ collection: { slug }, breadcrumbs }) => {
-                const relativeUrl = `/${slug}/${breadcrumbs.join("/")}`;
+                let addSlug = slug == "page" ? '' : `/${slug}`
+                if (addSlug == '/item') addSlug = '/items'
+                const relativeUrl = `${addSlug}/${breadcrumbs.join("/")}`;
                 return (window.location.href = relativeUrl);
               },
               /**
                * Only allows documents to be created to the `Blog Posts` Collection
                */
               filterCollections: (options) => {
-                return options.filter(
-                  (option) => option.label === "Blog Posts"
-                );
+                return options
               },
             }}
             /**
@@ -55,22 +54,13 @@ const App = ({ Component, pageProps }) => {
             {...pageProps}
           >
             {(livePageProps) => (
-              <Layout
-                rawData={livePageProps}
-                data={livePageProps.data?.getGlobalDocument?.data}
-              >
                 <Component {...livePageProps} />
-              </Layout>
             )}
           </TinaCMS>
         }
       >
-        <Layout
-          rawData={pageProps}
-          data={pageProps.data?.getGlobalDocument?.data}
-        >
           <Component {...pageProps} />
-        </Layout>
+        
       </TinaEditProvider>
     </>
   );
