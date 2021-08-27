@@ -2,14 +2,9 @@ import { getStaticPropsForTina } from "tinacms";
 import Markdown from "react-markdown";
 
 export default function Items(props) {
-
-  console.log(props);
-  
-
   const data = props.data.getPageDocument.data
   const items = props.data.getItemList.edges
   
-
   return (
     <>
       <h1>{data.title}</h1>

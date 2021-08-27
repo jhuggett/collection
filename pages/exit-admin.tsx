@@ -10,7 +10,7 @@ const GoToEditPage: React.FC = () => {
     router.back();
   }, []);
   return (
-          <h2>Exiting edit mode...</h2>
+    <h2>Exiting edit mode...</h2>
   );
 };
 

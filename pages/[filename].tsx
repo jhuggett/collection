@@ -29,8 +29,6 @@ if (!data) return (
 
 
 export const getStaticProps = async ({ params }) => {
-  const path = params.filename == 'home' ? 'index' : params.filename
-  
   const tinaProps = (await getStaticPropsForTina({
     query: `#graphql
       query Query($relativePath: String!) {
@@ -42,7 +40,7 @@ export const getStaticProps = async ({ params }) => {
         }
       }
     `,
-    variables: { relativePath: `${path}.md` },
+    variables: { relativePath: `${params.filename}.md` },
   })) as { data: { getPostsDocument: ItemDocument } };
   return {
     props: {
