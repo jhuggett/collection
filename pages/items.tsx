@@ -11,7 +11,10 @@ export default function Items(props) {
       <Markdown>{data.body}</Markdown>
       {items.map((edge) => {
         return <div>
-          <a href={`items/${edge.node.sys.filename}`}>{edge.node.data.name}</a>
+          <a href={`items/${edge.node.sys.filename}`}>{edge.node.data.name} ({edge.node.data.year})</a>
+          <div>
+            <img width={250} src={edge.node.data.images[0].myImage} />
+          </div>
         </div>
       })}
     </>
@@ -37,6 +40,10 @@ export const getStaticProps = async ({ params }) => {
               }
               data {
                   name
+                  year
+                  images {
+                    myImage
+                  }
               }
             }
           }
