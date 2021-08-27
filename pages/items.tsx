@@ -3,8 +3,6 @@ import Markdown from "react-markdown";
 
 export default function Items(props) {
 
-  console.log(props);
-
   const data = props.data.getPageDocument.data
   const items = props.data.getItemList.edges
   

@@ -5,12 +5,8 @@ import Markdown from "react-markdown";
 
 export default function Item(props: AsyncReturnType<typeof getStaticProps>["props"]) {
 
-
   const data = props.data.getItemDocument.data
-
-  console.log({data});
   
-
   return <>
     <a href={'/items'}>Back</a>
     <h1>

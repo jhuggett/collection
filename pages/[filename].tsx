@@ -18,8 +18,6 @@ if (!data) return (
   </>
 )
 
-console.log({data});
-
 
   return (
   <div>
@@ -69,11 +67,13 @@ export const getStaticPaths = async () => {
       }
     `,
   })) as any;
-  
+
+  let paths = pageListData.getPageList.edges.map((page) => ({
+    params: { filename: page.node.sys.filename },
+  }))
+  paths = paths.filter((path) => path.params.filename != 'items')
   return {
-    paths: pageListData.getPageList.edges.map((page) => ({
-      params: { filename: page.node.sys.filename },
-    })),
+    paths,
     fallback: 'blocking',
   };
 };
