@@ -3,19 +3,22 @@ import Markdown from "react-markdown";
 
 export default function Items(props) {
 
+  console.log(props);
+  
+
   const data = props.data.getPageDocument.data
   const items = props.data.getItemList.edges
   
 
   return (
     <>
-    <h1>{data.title}</h1>
-    <Markdown>{data.body}</Markdown>
-    {items.map((edge) => {
-      return <div>
-        <a href={`items/${edge.node.sys.filename}`}>{edge.node.data.name}</a>
-      </div>
-    })}
+      <h1>{data.title}</h1>
+      <Markdown>{data.body}</Markdown>
+      {items.map((edge) => {
+        return <div>
+          <a href={`items/${edge.node.sys.filename}`}>{edge.node.data.name}</a>
+        </div>
+      })}
     </>
   )
 }

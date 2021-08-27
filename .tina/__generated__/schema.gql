@@ -76,10 +76,14 @@ type Collection {
 
 union DocumentNode = ItemDocument | PageDocument
 
+type ItemImages {
+  myImage: String
+}
+
 type Item {
   name: String
   year: Int
-  images: [String]
+  images: [ItemImages]
   description: String
 }
 
@@ -140,10 +144,14 @@ input DocumentMutation {
   page: PageMutation
 }
 
+input ItemImagesMutation {
+  myImage: String
+}
+
 input ItemMutation {
   name: String
   year: Int
-  images: [String]
+  images: [ItemImagesMutation]
   description: String
 }
 

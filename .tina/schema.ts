@@ -18,10 +18,17 @@ export default defineSchema({
           name: "year"
         },
         {
-          type: "image",
+          type: "object",
           label: "Images",  
           name: "images",
-          list: true
+          list: true,
+          fields: [
+            {
+              type: "image",
+              name: "myImage",
+              label: "Image"
+            }
+          ]
         },
         {
           type: "string",

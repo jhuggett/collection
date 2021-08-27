@@ -13,8 +13,8 @@ export default function Item(props: AsyncReturnType<typeof getStaticProps>["prop
       {data.name}
     </h1>
     <h3>Made in {data.year}</h3>
-    {data.images?.map((src) => (
-      <img src={src} />
+    {data.images?.map((image) => (
+      <img src={image.myImage} />
     ))}
     <Markdown>{data.description}</Markdown>
   </>
@@ -28,7 +28,9 @@ export const getStaticProps = async ({ params }) => {
           data {
             name
             year
-            images
+            images {
+              myImage
+            }
             description
           }
         }

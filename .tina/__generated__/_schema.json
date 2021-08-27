@@ -24,10 +24,22 @@
           ]
         },
         {
-          "type": "image",
+          "type": "object",
           "label": "Images",
           "name": "images",
           "list": true,
+          "fields": [
+            {
+              "type": "image",
+              "name": "myImage",
+              "label": "Image",
+              "namespace": [
+                "item",
+                "images",
+                "myImage"
+              ]
+            }
+          ],
           "namespace": [
             "item",
             "images"
