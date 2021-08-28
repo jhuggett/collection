@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { TinaEditProvider } from "tinacms/dist/edit-state";
 const TinaCMS = dynamic(() => import("tinacms"), { ssr: false });
 import { TinaCloudCloudinaryMediaStore } from "next-tinacms-cloudinary";
+import { createGlobalStyle } from "styled-components";
 
 const NEXT_PUBLIC_TINA_CLIENT_ID = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
 const NEXT_PUBLIC_USE_LOCAL_CLIENT =
@@ -11,6 +12,7 @@ const NEXT_PUBLIC_USE_LOCAL_CLIENT =
 const App = ({ Component, pageProps }) => {
   return (
     <>
+      <GlobalTheme />
       <TinaEditProvider
         showEditButton={false}
         editMode={
@@ -54,6 +56,7 @@ const App = ({ Component, pageProps }) => {
             {...pageProps}
           >
             {(livePageProps) => (
+              
                 <Component {...livePageProps} />
             )}
           </TinaCMS>
@@ -65,5 +68,33 @@ const App = ({ Component, pageProps }) => {
     </>
   );
 };
+
+
+const GlobalTheme = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  html, body, #__next {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  /* width */
+  ::-webkit-scrollbar {
+    width: .5em;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px grey;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 1em;
+    opacity: .5;
+  }
+`
 
 export default App;

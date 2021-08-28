@@ -2,13 +2,15 @@ import { getStaticPropsForTina, staticRequest } from "tinacms";
 import type { ItemDocument } from "../../.tina/__generated__/types";
 import FourOhFour from "../404";
 import Markdown from "react-markdown";
+import { useRouter } from "next/router";
 
 export default function Item(props: AsyncReturnType<typeof getStaticProps>["props"]) {
 
   const data = props.data.getItemDocument.data
+  const router = useRouter()
   
   return <>
-    <a href={'/items'}>Back</a>
+    <a onClick={() => router.back()}>Back</a>
     <h1>
       {data.name}
     </h1>
