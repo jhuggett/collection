@@ -155,6 +155,12 @@ export type CollectionDocumentsArgs = {
 
 export type DocumentNode = ItemDocument | PageDocument;
 
+export type ItemFound = {
+  __typename?: 'ItemFound';
+  where?: Maybe<Scalars['String']>;
+  when?: Maybe<Scalars['String']>;
+};
+
 export type ItemImages = {
   __typename?: 'ItemImages';
   myImage?: Maybe<Scalars['String']>;
@@ -163,7 +169,8 @@ export type ItemImages = {
 export type Item = {
   __typename?: 'Item';
   name?: Maybe<Scalars['String']>;
-  year?: Maybe<Scalars['Int']>;
+  made?: Maybe<Scalars['String']>;
+  found?: Maybe<ItemFound>;
   images?: Maybe<Array<Maybe<ItemImages>>>;
   description?: Maybe<Scalars['String']>;
 };
@@ -259,13 +266,19 @@ export type DocumentMutation = {
   page?: Maybe<PageMutation>;
 };
 
+export type ItemFoundMutation = {
+  where?: Maybe<Scalars['String']>;
+  when?: Maybe<Scalars['String']>;
+};
+
 export type ItemImagesMutation = {
   myImage?: Maybe<Scalars['String']>;
 };
 
 export type ItemMutation = {
   name?: Maybe<Scalars['String']>;
-  year?: Maybe<Scalars['Int']>;
+  made?: Maybe<Scalars['String']>;
+  found?: Maybe<ItemFoundMutation>;
   images?: Maybe<Array<Maybe<ItemImagesMutation>>>;
   description?: Maybe<Scalars['String']>;
 };

@@ -13,9 +13,26 @@ export default defineSchema({
           name: "name",
         },
         {
-          type: "number",
-          label: "Year",
-          name: "year"
+          type: "string",
+          label: "Made",
+          name: "made"
+        },
+        {
+          type: "object",
+          label: "Found",
+          name: "found",
+          fields: [
+            {
+              type: "string",
+              label: "Where",
+              name: "where",
+            },
+            {
+              type: "string",
+              label: "When",
+              name: "when"
+            }
+          ]
         },
         {
           type: "object",

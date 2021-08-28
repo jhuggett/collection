@@ -20,7 +20,7 @@ export default function Items(props) {
           return <Item onClick={() => router.push(`items/${edge.node.sys.filename}`)}>
             <Title>
               <div>{edge.node.data.name}</div>
-              <div>({edge.node.data.year})</div>
+              <div>({edge.node.data.made})</div>
               </Title>
             
               <img width={300} src={edge.node.data.images[0].myImage} />
@@ -54,10 +54,10 @@ const Item = styled.div`
   
   margin: 1em 1em 1em 1em;
 
-  box-shadow: 5px 10px 8px #888888;
+  box-shadow: 0px 0px 0px #888888;
   transition-duration: .25s;
   &:hover {
-    box-shadow: 30px 50px 42px #888888;
+    box-shadow: 0px 0px 42px #888888;
     
     cursor: pointer;
   }
@@ -88,7 +88,7 @@ export const getStaticProps = async ({ params }) => {
               }
               data {
                   name
-                  year
+                  made
                   images {
                     myImage
                   }

@@ -1,6 +1,9 @@
 ---
 name: British Six Pence
-year: 1846
+made: '1846'
+found:
+  where: Prince Edward Island
+  when: '2021'
 images:
   - myImage: >-
       http://res.cloudinary.com/dza6vysyp/image/upload/v1630100167/collection/coins/1846-six-pence/DB8E8EBF-A441-441F-9188-F6853C86B9B1_1_105_c_adobespark_rfvcxp.png

@@ -82,19 +82,6 @@ const GlobalTheme = createGlobalStyle`
     width: 100%;
     overflow-x: hidden;
   }
-  /* width */
-  ::-webkit-scrollbar {
-    width: .5em;
-  }
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 1px grey;
-  }
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    border-radius: 1em;
-    opacity: .5;
-  }
 `
 
 export default App;

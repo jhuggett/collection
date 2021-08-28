@@ -15,12 +15,43 @@
           ]
         },
         {
-          "type": "number",
-          "label": "Year",
-          "name": "year",
+          "type": "string",
+          "label": "Made",
+          "name": "made",
           "namespace": [
             "item",
-            "year"
+            "made"
+          ]
+        },
+        {
+          "type": "object",
+          "label": "Found",
+          "name": "found",
+          "fields": [
+            {
+              "type": "string",
+              "label": "Where",
+              "name": "where",
+              "namespace": [
+                "item",
+                "found",
+                "where"
+              ]
+            },
+            {
+              "type": "string",
+              "label": "When",
+              "name": "when",
+              "namespace": [
+                "item",
+                "found",
+                "when"
+              ]
+            }
+          ],
+          "namespace": [
+            "item",
+            "found"
           ]
         },
         {

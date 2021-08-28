@@ -3,24 +3,54 @@ import type { ItemDocument } from "../../.tina/__generated__/types";
 import FourOhFour from "../404";
 import Markdown from "react-markdown";
 import { useRouter } from "next/router";
+import styled from "styled-components"
 
 export default function Item(props: AsyncReturnType<typeof getStaticProps>["props"]) {
 
   const data = props.data.getItemDocument.data
   const router = useRouter()
   
-  return <>
-    <a onClick={() => router.back()}>Back</a>
+  return <> 
+  <BackButton onClick={() => router.back()}>Back</BackButton>
+  <Page>  
     <h1>
       {data.name}
     </h1>
-    <h3>Made in {data.year}</h3>
+    <h2>From {data.made}</h2>
+    <h3>Found in {data.found?.where}, {data.found?.when}</h3>
     {data.images?.map((image) => (
-      <img src={image.myImage} />
+      <Image src={image.myImage} />
     ))}
     <Markdown>{data.description}</Markdown>
+  </Page>
   </>
 }
+
+const Page = styled.div`
+  text-align: center;
+`
+
+const Image = styled.img`
+
+  max-width: 100%;
+
+`
+
+const BackButton = styled.div`
+  font-size: 1.75em;
+  margin: 1em 0 0 1em;
+  padding: .5em .5em .5em .5em;
+  border-radius: 15%;
+
+  width: fit-content;
+
+  transition-duration: .25s;
+
+  &:hover {
+    box-shadow: 0px 0px 15px #888888;
+    cursor: pointer;
+  }
+`
 
 export const getStaticProps = async ({ params }) => {
   const tinaProps = (await getStaticPropsForTina({
@@ -29,9 +59,13 @@ export const getStaticProps = async ({ params }) => {
         getItemDocument(relativePath: $relativePath) {
           data {
             name
-            year
+            made
             images {
               myImage
+            }
+            found {
+              when
+              where
             }
             description
           }

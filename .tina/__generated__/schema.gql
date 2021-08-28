@@ -76,13 +76,19 @@ type Collection {
 
 union DocumentNode = ItemDocument | PageDocument
 
+type ItemFound {
+  where: String
+  when: String
+}
+
 type ItemImages {
   myImage: String
 }
 
 type Item {
   name: String
-  year: Int
+  made: String
+  found: ItemFound
   images: [ItemImages]
   description: String
 }
@@ -144,13 +150,19 @@ input DocumentMutation {
   page: PageMutation
 }
 
+input ItemFoundMutation {
+  where: String
+  when: String
+}
+
 input ItemImagesMutation {
   myImage: String
 }
 
 input ItemMutation {
   name: String
-  year: Int
+  made: String
+  found: ItemFoundMutation
   images: [ItemImagesMutation]
   description: String
 }

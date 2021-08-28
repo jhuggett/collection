@@ -1,6 +1,9 @@
 ---
 name: Canadian 5 Cents
-year: 1899
+made: '1899'
+found:
+  where: Prince Edward Island
+  when: '2021'
 images:
   - myImage: >-
       http://res.cloudinary.com/dza6vysyp/image/upload/v1630100853/collection/coins/1899-5-cent/5130F46A-87DA-41FA-9F2D-64DD98FDCFC4_1_105_c_adobespark_fwaqzt.png
