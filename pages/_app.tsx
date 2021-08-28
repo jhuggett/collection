@@ -4,7 +4,7 @@ import { TinaEditProvider } from "tinacms/dist/edit-state";
 const TinaCMS = dynamic(() => import("tinacms"), { ssr: false });
 import { TinaCloudCloudinaryMediaStore } from "next-tinacms-cloudinary";
 import { createGlobalStyle } from "styled-components";
-import { Head } from "next/document";
+import Head from 'next/head'
 
 const NEXT_PUBLIC_TINA_CLIENT_ID = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
 const NEXT_PUBLIC_USE_LOCAL_CLIENT =
