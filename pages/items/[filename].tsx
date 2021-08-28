@@ -18,10 +18,11 @@ export default function Item(props: AsyncReturnType<typeof getStaticProps>["prop
     </h1>
     <h2>From {data.made}</h2>
     <h3>Found in {data.found?.where}, {data.found?.when}</h3>
+    <Markdown>{data.description}</Markdown>
     {data.images?.map((image) => (
       <Image src={image.myImage} />
     ))}
-    <Markdown>{data.description}</Markdown>
+    
   </Page>
   </>
 }
@@ -47,7 +48,7 @@ const BackButton = styled.div`
   transition-duration: .25s;
 
   &:hover {
-    box-shadow: 0px 0px 15px #888888;
+    box-shadow: 0px 0px 10px #888888;
     cursor: pointer;
   }
 `
