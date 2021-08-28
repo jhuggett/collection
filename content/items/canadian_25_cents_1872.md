@@ -1,5 +1,5 @@
 ---
-name: Canadian 25 Cents
+name: Canadian 25 Cents 
 year: 1872
 images:
   - myImage: >-
