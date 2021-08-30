@@ -1,4 +1,5 @@
 import { defineSchema } from "@tinacms/cli";
+import { tags } from "../pages/items"
 
 export default defineSchema({
   collections: [
@@ -55,6 +56,13 @@ export default defineSchema({
             component: "markdown"
           },
           isBody: true
+        },
+        {
+          type: "string",
+          label: "Tags",
+          name: "tags",
+          list: true,
+          options: tags.map(tag => tag.name)
         }
       ]
     },

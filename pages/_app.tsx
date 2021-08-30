@@ -1,4 +1,3 @@
-import "../styles.css";
 import dynamic from "next/dynamic";
 import { TinaEditProvider } from "tinacms/dist/edit-state";
 const TinaCMS = dynamic(() => import("tinacms"), { ssr: false });

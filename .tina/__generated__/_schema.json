@@ -88,6 +88,21 @@
             "item",
             "description"
           ]
+        },
+        {
+          "type": "string",
+          "label": "Tags",
+          "name": "tags",
+          "list": true,
+          "options": [
+            "coin",
+            "bullet",
+            "misc"
+          ],
+          "namespace": [
+            "item",
+            "tags"
+          ]
         }
       ],
       "namespace": [

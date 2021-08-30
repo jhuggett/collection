@@ -91,6 +91,7 @@ type Item {
   found: ItemFound
   images: [ItemImages]
   description: String
+  tags: [String]
 }
 
 type ItemDocument implements Node & Document {
@@ -165,6 +166,7 @@ input ItemMutation {
   found: ItemFoundMutation
   images: [ItemImagesMutation]
   description: String
+  tags: [String]
 }
 
 input PageMutation {

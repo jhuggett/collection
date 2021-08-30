@@ -173,6 +173,7 @@ export type Item = {
   found?: Maybe<ItemFound>;
   images?: Maybe<Array<Maybe<ItemImages>>>;
   description?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type ItemDocument = Node & Document & {
@@ -281,6 +282,7 @@ export type ItemMutation = {
   found?: Maybe<ItemFoundMutation>;
   images?: Maybe<Array<Maybe<ItemImagesMutation>>>;
   description?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type PageMutation = {
