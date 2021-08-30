@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import styled from "styled-components"
 
 export default function Item(props: AsyncReturnType<typeof getStaticProps>["props"]) {
-
   const data = props.data.getItemDocument.data
   const router = useRouter()
   
@@ -22,7 +21,6 @@ export default function Item(props: AsyncReturnType<typeof getStaticProps>["prop
     {data.images?.map((image) => (
       <Image src={image.myImage} />
     ))}
-    
   </Page>
   </>
 }
@@ -32,7 +30,6 @@ const Page = styled.div`
 `
 
 const Image = styled.img`
-
   max-width: 100%;
 
 `
@@ -42,11 +39,8 @@ const BackButton = styled.div`
   margin: 1em 0 0 1em;
   padding: .5em .5em .5em .5em;
   border-radius: 15%;
-
   width: fit-content;
-
   transition-duration: .25s;
-
   &:hover {
     box-shadow: 0px 0px 10px #888888;
     cursor: pointer;

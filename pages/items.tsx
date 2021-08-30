@@ -22,9 +22,7 @@ export default function Items(props) {
               <div>{edge.node.data.name}</div>
               <div>({edge.node.data.made})</div>
               </Title>
-            
               <img width={300} src={edge.node.data.images[0].myImage} />
-              
           </Item>
         })}
       </Container>
@@ -39,11 +37,8 @@ const PageInfo = styled.div`
 
 const Title = styled.div`
   width: 100%;
-  
   font-size: 1.25em;
-
   text-align: center;
-
   padding-top: 2em;
 
 `
@@ -51,14 +46,11 @@ const Title = styled.div`
 const Item = styled.div`
   border-width: 1em;
   border-radius: 15%;
-  
   margin: 1em 1em 1em 1em;
-
   box-shadow: 0px 0px 0px #888888;
   transition-duration: .25s;
   &:hover {
     box-shadow: 0px 0px 42px #888888;
-    
     cursor: pointer;
   }
 `

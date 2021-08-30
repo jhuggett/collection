@@ -1,30 +1,30 @@
 import { getStaticPropsForTina, staticRequest } from "tinacms";
 import { ItemDocument } from "../.tina/__generated__/types";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function index(props) {
+  const router = useRouter()
 
   // just redirecting to /items for now
   useEffect(() => {
-    window.location.href = '/items'
+    router.push('/items')
   })
   
+  const data = props.data?.getPageDocument?.data
 
-const data = props.data?.getPageDocument?.data
-
-if (!data) return (
-  <>
-  Missing data!
-  </>
-)
-
-
-  return (
-  <div>
-    <h1>{data.title}</h1>
-    <p>{data.body}</p>
-  </div>
+  if (!data) return (
+    <>
+    Missing data!
+    </>
   )
+
+    return (
+    <div>
+      <h1>{data.title}</h1>
+      <p>{data.body}</p>
+    </div>
+    )
 }
 
 
