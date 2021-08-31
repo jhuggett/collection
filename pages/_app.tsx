@@ -68,7 +68,6 @@ const App = ({ Component, pageProps }) => {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
       </Head>
       <GlobalTheme />
-      <script src="noflash.js" />
       <TinaEditProvider
         showEditButton={false}
         editMode={
