@@ -23,6 +23,8 @@ const tags = [
 export default function Items(props) {
   const data = props.data.getPageDocument.data
 
+  const theme = props.themeConfig
+
   const tagsToUse = [
     {
       name: "all",
@@ -50,7 +52,16 @@ export default function Items(props) {
       <PageInfo>
         <Title>{data.title}</Title>
         <Markdown>{data.body}</Markdown>
+        <ThemeToggler onClick={() => theme.toggleTheme()}>
+        {
+          theme.getTheme().name == 'light' ?
+          "Turn off the lights"
+          :
+          "Let there be light"
+        }
+      </ThemeToggler>
       </PageInfo>
+      
       <Tags>
         {tagsToUse.map(tag => {
           return (
@@ -73,6 +84,21 @@ export default function Items(props) {
   )
 }
 
+const ThemeToggler = styled.div`
+  text-align: center;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  width: fit-content;
+
+  padding: .5em .5em .5em .5em;
+  border-radius: 10px;
+
+  :hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 10px #888888;
+  }
+`
+
 const Title = styled.div`
   letter-spacing: .15em;
   font-size: 2.5em;
@@ -83,7 +109,6 @@ const Title = styled.div`
 const Tags = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 1em;
   flex-wrap: wrap;
 `
 interface TagProps {
@@ -95,7 +120,7 @@ const Tag = styled.div<TagProps>`
   font-size: 1.5em;
   transition-duration: .25s;
   padding: .5em .5em .5em .5em;
-  border-radius: 20%;
+  border-radius: 10px;
   &:hover{
     cursor: pointer;
   }
@@ -106,7 +131,10 @@ const Tag = styled.div<TagProps>`
 `
 
 const PageInfo = styled.div`
-  text-align: center
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
 `
 
 const ItemTitle = styled.div`
@@ -132,8 +160,8 @@ const Item = styled.div`
   align-items: center;
   padding-bottom: 1em;
   width: 325px;
-  background: white;
-  color: black;
+  
+  
   &:hover {
     box-shadow: 0px 0px 42px #888888;
     cursor: pointer;

@@ -2,16 +2,65 @@ import dynamic from "next/dynamic";
 import { TinaEditProvider } from "tinacms/dist/edit-state";
 const TinaCMS = dynamic(() => import("tinacms"), { ssr: false });
 import { TinaCloudCloudinaryMediaStore } from "next-tinacms-cloudinary";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Head from 'next/head'
+import { useState, useEffect } from "react";
 
 const NEXT_PUBLIC_TINA_CLIENT_ID = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
 const NEXT_PUBLIC_USE_LOCAL_CLIENT =
   process.env.NEXT_PUBLIC_USE_LOCAL_CLIENT || 0;
 
+
+const themes = {
+  light: {
+    name: 'light',
+    background: 'white',
+    primary: 'black',
+    tina: {
+      primary: 'red'
+    }
+  },
+  dark: {
+    name: 'dark',
+    background: 'black',
+    primary: 'white',
+    tina: {
+      primary: 'red'
+    }
+  }
+}
+
+const themeKey = 'theme'
+
 const App = ({ Component, pageProps }) => {
-  return (
-    <>
+
+  const [theme, setTheme] = useState(themes.dark)
+
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const storedTheme = window.localStorage.getItem(themeKey)
+    if (storedTheme) {
+      setTheme(themes[storedTheme])
+    }
+  })
+
+  const themeConfig = {
+    getTheme: () => theme,
+    toggleTheme: () => {
+      if (theme.name == themes.light.name) {
+        window.localStorage.setItem(themeKey, themes.dark.name)
+        setTheme(themes.dark)
+      } else {
+        window.localStorage.setItem(themeKey, themes.light.name)
+        setTheme(themes.light)
+      }
+    }
+  }
+
+  const body = (
+    <ThemeProvider theme={theme} >
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -19,6 +68,7 @@ const App = ({ Component, pageProps }) => {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
       </Head>
       <GlobalTheme />
+      <script src="noflash.js" />
       <TinaEditProvider
         showEditButton={false}
         editMode={
@@ -63,16 +113,22 @@ const App = ({ Component, pageProps }) => {
           >
             {(livePageProps) => (
               
-                <Component {...livePageProps} />
+                <Component themeConfig={themeConfig} {...livePageProps} />
             )}
           </TinaCMS>
         }
       >
-          <Component {...pageProps} />
+          <Component themeConfig={themeConfig} {...pageProps} />
         
       </TinaEditProvider>
-    </>
+    </ThemeProvider>
   );
+
+  if (!mounted) {
+    return <div style={{ visibility: 'hidden' }}>{body}</div>
+  }
+
+  return body
 };
 
 
@@ -82,14 +138,17 @@ const GlobalTheme = createGlobalStyle`
     padding: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 1.15em;
+
+    background: ${props => props.theme.background};
+    color: ${p => p.theme.primary};
   }
   html, body, #__next {
     height: 100%;
     width: 100%;
     overflow-x: hidden;
-    --tina-color-primary-light: Black;
-    --tina-color-primary: Black;
-    --tina-color-primary-dark: Black;
+    --tina-color-primary-light: ${p => p.theme.tina.primary};;
+    --tina-color-primary: ${p => p.theme.tina.primary};;
+    --tina-color-primary-dark: ${p => p.theme.tina.primary};;
   }
 `
 
