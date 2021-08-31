@@ -34,12 +34,9 @@ const themeKey = 'theme'
 
 const App = ({ Component, pageProps }) => {
 
-  const [theme, setTheme] = useState(themes.dark)
-
-  const [mounted, setMounted] = useState(false)
+  const [theme, setTheme] = useState(themes.light)
 
   useEffect(() => {
-    setMounted(true)
     const storedTheme = window.localStorage.getItem(themeKey)
     if (storedTheme) {
       setTheme(themes[storedTheme])
@@ -59,7 +56,7 @@ const App = ({ Component, pageProps }) => {
     }
   }
 
-  const body = (
+  return (
     <ThemeProvider theme={theme} >
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -122,12 +119,6 @@ const App = ({ Component, pageProps }) => {
       </TinaEditProvider>
     </ThemeProvider>
   );
-
-  if (!mounted) {
-    return <div style={{ visibility: 'hidden' }}>{body}</div>
-  }
-
-  return body
 };
 
 
