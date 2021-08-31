@@ -17,7 +17,7 @@ const themes = {
     background: 'white',
     primary: 'black',
     tina: {
-      primary: 'red'
+      primary: 'black'
     }
   },
   dark: {
@@ -25,7 +25,7 @@ const themes = {
     background: 'black',
     primary: 'white',
     tina: {
-      primary: 'red'
+      primary: '#b08968'
     }
   }
 }
@@ -33,9 +33,7 @@ const themes = {
 const themeKey = 'theme'
 
 const App = ({ Component, pageProps }) => {
-
   const [theme, setTheme] = useState(themes.light)
-
   useEffect(() => {
     const storedTheme = window.localStorage.getItem(themeKey)
     if (storedTheme) {
@@ -115,7 +113,6 @@ const App = ({ Component, pageProps }) => {
         }
       >
           <Component themeConfig={themeConfig} {...pageProps} />
-        
       </TinaEditProvider>
     </ThemeProvider>
   );

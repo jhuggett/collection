@@ -89,10 +89,8 @@ const ThemeToggler = styled.div`
   margin-top: 2em;
   margin-bottom: 2em;
   width: fit-content;
-
   padding: .5em .5em .5em .5em;
   border-radius: 10px;
-
   :hover{
     cursor: pointer;
     box-shadow: 0px 0px 10px #888888;
@@ -134,7 +132,7 @@ const PageInfo = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
-
+  text-align: center;
 `
 
 const ItemTitle = styled.div`
