@@ -4,21 +4,21 @@ import styled from "styled-components"
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
-
-export const tags = [
+const tags = [
   {
-    name: "coin",
-    label: "Coins"
+    "name": "coin",
+    "label": "Coins"
   },
   {
-    name: "bullet",
-    label: "Bullets"
+    "name": "bullet",
+    "label": "Bullets"
   },
   {
-    name: "misc",
-    label: "Misc"
-  },
+    "name": "misc",
+    "label": "Misc"
+  }
 ]
+
 
 export default function Items(props) {
   const data = props.data.getPageDocument.data
@@ -48,7 +48,7 @@ export default function Items(props) {
   return (
     <>
       <PageInfo>
-        <h1>{data.title}</h1>
+        <Title>{data.title}</Title>
         <Markdown>{data.body}</Markdown>
       </PageInfo>
       <Tags>
@@ -61,10 +61,10 @@ export default function Items(props) {
       <Container>
         {items.map((edge) => {
           return <Item onClick={() => router.push(`items/${edge.node.sys.filename}`)}>
-            <Title>
-              <div>{edge.node.data.name}</div>
+            <ItemTitle>
+              <ItemName>{edge.node.data.name}</ItemName>
               <div>({edge.node.data.made})</div>
-              </Title>
+            </ItemTitle>
               <img width={300} src={edge.node.data.images[0].myImage} />
           </Item>
         })}
@@ -73,10 +73,18 @@ export default function Items(props) {
   )
 }
 
+const Title = styled.div`
+  letter-spacing: .15em;
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-top: 1em;
+`
+
 const Tags = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 1em;
+  flex-wrap: wrap;
 `
 interface TagProps {
   selected: boolean
@@ -85,11 +93,9 @@ interface TagProps {
 const Tag = styled.div<TagProps>`
   margin: 0 1em 0 1em;
   font-size: 1.5em;
-
   transition-duration: .25s;
   padding: .5em .5em .5em .5em;
   border-radius: 20%;
-
   &:hover{
     cursor: pointer;
   }
@@ -103,8 +109,7 @@ const PageInfo = styled.div`
   text-align: center
 `
 
-
-const Title = styled.div`
+const ItemTitle = styled.div`
   width: 100%;
   font-size: 1.25em;
   text-align: center;
@@ -112,12 +117,23 @@ const Title = styled.div`
 
 `
 
+const ItemName = styled.div`
+  margin-right: 1em;
+  margin-left: 1em;
+`
 const Item = styled.div`
   border-width: 1em;
   border-radius: 15%;
   margin: 1em 1em 1em 1em;
   box-shadow: 0px 0px 0px #888888;
   transition-duration: .25s;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding-bottom: 1em;
+  width: 325px;
+  background: white;
+  color: black;
   &:hover {
     box-shadow: 0px 0px 42px #888888;
     cursor: pointer;

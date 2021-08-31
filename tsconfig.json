@@ -20,6 +20,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".forestry/types.ts",
-    ".forestry/config.ts"
+    ".forestry/config.ts",
+    ".tina/schema.ts"
   ]
 }

@@ -1,5 +1,19 @@
 import { defineSchema } from "@tinacms/cli";
-import { tags } from "../pages/items"
+
+const tags = [
+  {
+    "name": "coin",
+    "label": "Coins"
+  },
+  {
+    "name": "bullet",
+    "label": "Bullets"
+  },
+  {
+    "name": "misc",
+    "label": "Misc"
+  }
+]
 
 export default defineSchema({
   collections: [

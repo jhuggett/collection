@@ -80,13 +80,16 @@ const GlobalTheme = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.15em;
   }
   html, body, #__next {
     height: 100%;
     width: 100%;
     overflow-x: hidden;
+    --tina-color-primary-light: Black;
+    --tina-color-primary: Black;
+    --tina-color-primary-dark: Black;
   }
 `
 
