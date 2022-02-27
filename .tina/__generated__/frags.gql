@@ -1,0 +1,20 @@
+fragment ItemParts on Item {
+  name
+  made
+  found {
+    __typename
+    where
+    when
+  }
+  images {
+    __typename
+    myImage
+  }
+  description
+  tags
+}
+
+fragment PageParts on Page {
+  title
+  body
+}
