@@ -1,4 +1,11 @@
 {
+  "version": {
+    "fullVersion": "0.59.7",
+    "major": "0",
+    "minor": "59",
+    "patch": "7"
+  },
+  "meta": {},
   "collections": [
     {
       "label": "Item",
@@ -77,12 +84,9 @@
           ]
         },
         {
-          "type": "string",
+          "type": "rich-text",
           "label": "Description",
           "name": "description",
-          "ui": {
-            "component": "markdown"
-          },
           "isBody": true,
           "namespace": [
             "item",
@@ -124,12 +128,9 @@
           ]
         },
         {
-          "type": "string",
+          "type": "rich-text",
           "label": "Body",
           "name": "body",
-          "ui": {
-            "component": "markdown"
-          },
           "isBody": true,
           "namespace": [
             "page",
@@ -141,6 +142,5 @@
         "page"
       ]
     }
-  ],
-  "namespace": []
+  ]
 }

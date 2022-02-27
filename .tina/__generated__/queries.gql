@@ -1,0 +1,77 @@
+query getItemDocument($relativePath: String!) {
+  getItemDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...ItemParts
+    }
+  }
+}
+
+query getItemList {
+  getItemList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...ItemParts
+        }
+      }
+    }
+  }
+}
+
+query getPageDocument($relativePath: String!) {
+  getPageDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...PageParts
+    }
+  }
+}
+
+query getPageList {
+  getPageList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...PageParts
+        }
+      }
+    }
+  }
+}
