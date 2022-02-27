@@ -1,23 +1,29 @@
-import { getStaticPropsForTina, staticRequest } from "tinacms";
-import type { ItemDocument } from "../../.tina/__generated__/types";
-import FourOhFour from "../404";
-import Markdown from "react-markdown";
+import { ExperimentalGetTinaClient } from "../../.tina/__generated__/types";
+import { TinaMarkdown } from 'tinacms/dist/rich-text'
 import { useRouter } from "next/router";
 import styled from "styled-components"
+import Viewer from 'viewerjs'
+import 'viewerjs/dist/viewer.css'
+import { useEffect } from "react";
+import { useTina } from "tinacms/dist/edit-state";
 
 export default function Item(props: AsyncReturnType<typeof getStaticProps>["props"]) {
-  const data = props.data.getItemDocument.data
+  const data = useTina(props.item).data.getItemDocument.data
   const router = useRouter()
+
+  useEffect(() => {
+    new Viewer(document.getElementById("page"))
+  }, [])
   
   return <> 
   <BackButton onClick={() => router.back()}>Back</BackButton>
-  <Page>  
+  <Page id="page">  
     <h1>
       {data.name}
     </h1>
     <h2>From {data.made}</h2>
     <h3>Found in {data.found?.where}, {data.found?.when}</h3>
-    <Markdown>{data.description}</Markdown>
+    <TinaMarkdown content={data.description} />
     {data.images?.map((image) => (
       <Image src={image.myImage} />
     ))}
@@ -31,7 +37,7 @@ const Page = styled.div`
 
 const Image = styled.img`
   max-width: 100%;
-
+  cursor: pointer;
 `
 
 const BackButton = styled.div`
@@ -48,56 +54,24 @@ const BackButton = styled.div`
 `
 
 export const getStaticProps = async ({ params }) => {
-  const tinaProps = (await getStaticPropsForTina({
-    query: `#graphql
-      query Query($relativePath: String!) {
-        getItemDocument(relativePath: $relativePath) {
-          data {
-            name
-            made
-            images {
-              myImage
-            }
-            found {
-              when
-              where
-            }
-            description
-          }
-        }
-      }
-    `,
-    variables: {
-      relativePath: `${params.filename}.md`
-    }
-  })) as { data: { getItemDocument: ItemDocument }}
+  const client = ExperimentalGetTinaClient()
+  const item = await client.getItemDocument({
+    relativePath: `${params.filename}.md`
+  })
 
   return {
     props: {
-      ...tinaProps
+      item
     }
   }
 }
 
 export const getStaticPaths = async () => {
-  const itemListData = (await staticRequest({
-    query: `#graphql
-        {
-          getItemList {
-          edges {
-            node {
-            sys { 
-                filename
-              }
-            }
-          }
-        }
-      }
-    `,
-  })) as any;
+  const client = ExperimentalGetTinaClient()
+  const items = await client.getItemList()
   
   return {
-    paths: itemListData.getItemList.edges.map((page) => ({
+    paths: items.data.getItemList.edges.map((page) => ({
       params: { filename: page.node.sys.filename },
     })),
     fallback: 'blocking',

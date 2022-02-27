@@ -1,8 +1,9 @@
-import { getStaticPropsForTina } from "tinacms";
-import Markdown from "react-markdown";
 import styled from "styled-components"
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { ExperimentalGetTinaClient } from "../.tina/__generated__/types";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
+import { useTina } from "tinacms/dist/edit-state";
 
 const tags = [
   {
@@ -19,10 +20,10 @@ const tags = [
   }
 ]
 
+export default function Items(props: AsyncReturnType<typeof getStaticProps>["props"]) {
+  const page = useTina(props.page).data.getPageDocument.data
 
-export default function Items(props) {
-  const data = props.data.getPageDocument.data
-
+  //@ts-ignore
   const theme = props.themeConfig
 
   const tagsToUse = [
@@ -34,14 +35,14 @@ export default function Items(props) {
   ]
 
   const [selectedTag, setSelectedTag] = useState(tagsToUse[0])
-  const [items, setItems] = useState(props.data.getItemList.edges)
+  const [items, setItems] = useState([])
   
   useEffect(() => {
-    const startingItems = props.data.getItemList.edges
+    const startingItems = props.items.data.getItemList.edges.map(item => item.node)
     if (selectedTag.name == "all") {
       setItems(startingItems)
     } else {
-      setItems(startingItems.filter((item) => item.node.data.tags.includes(selectedTag.name)))
+      setItems(startingItems.filter((item) => item.data.tags.includes(selectedTag.name)))
     }
   }, [selectedTag])
 
@@ -50,8 +51,8 @@ export default function Items(props) {
   return (
     <>
       <PageInfo>
-        <Title>{data.title}</Title>
-        <Markdown>{data.body}</Markdown>
+        <Title>{page.title}</Title>
+        <TinaMarkdown content={page.body} />
         <ThemeToggler onClick={() => theme.toggleTheme()}>
         {
           theme.getTheme().name == 'light' ?
@@ -70,13 +71,13 @@ export default function Items(props) {
         })}
       </Tags>
       <Container>
-        {items.map((edge) => {
-          return <Item onClick={() => router.push(`items/${edge.node.sys.filename}`)}>
+        {items.map((item) => {
+          return <Item onClick={() => router.push(`items/${item.sys.filename}`)}>
             <ItemTitle>
-              <ItemName>{edge.node.data.name}</ItemName>
-              <div>({edge.node.data.made})</div>
+              <ItemName>{item.data.name}</ItemName>
+              <div>({item.data.made})</div>
             </ItemTitle>
-              <img width={300} src={edge.node.data.images[0].myImage} />
+              <img width={300} src={item.data.images[0].myImage} />
           </Item>
         })}
       </Container>
@@ -172,40 +173,18 @@ const Container = styled.div`
   justify-content: space-evenly;
 `
 
-export const getStaticProps = async ({ params }) => {
-  
-  const tinaProps = (await getStaticPropsForTina({
-    query: `#graphql
-      {
-        getPageDocument(relativePath: "items.md") {
-          data {
-            title
-            body
-          }
-        }
-        getItemList {
-          edges {
-            node {
-              sys {
-                filename
-              }
-              data {
-                  name
-                  made
-                  images {
-                    myImage
-                  }
-                  tags
-              }
-            }
-          }
-        }
-      }
-    `,
-  }));
+export const getStaticProps = async () => {
+  const client = ExperimentalGetTinaClient()
+  const items = await client.getItemList()
+  const page = await client.getPageDocument({relativePath: 'items.md'})
+
   return {
     props: {
-      ...tinaProps,
-    },
-  };
+      items,
+      page
+    }
+  }
 };
+
+export type AsyncReturnType<T extends (...args: any) => Promise<any>> =
+  T extends (...args: any) => Promise<infer R> ? R : any;

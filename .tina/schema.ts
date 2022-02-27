@@ -63,12 +63,9 @@ export default defineSchema({
           ]
         },
         {
-          type: "string",
+          type: "rich-text",
           label: "Description",
           name: "description",
-          ui: {
-            component: "markdown"
-          },
           isBody: true
         },
         {
@@ -91,12 +88,9 @@ export default defineSchema({
           name: "title"
         },
         {
-          type: "string",
+          type: "rich-text",
           label: "Body",
           name: 'body',
-          ui: {
-            component: 'markdown'
-          },
           isBody: true
         }
       ]
