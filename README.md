@@ -1,2 +1,2 @@
 # Collection
-This site displays various things I've found.
+This site displays various items I've found.
