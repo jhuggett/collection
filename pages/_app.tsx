@@ -5,6 +5,7 @@ import { TinaCloudCloudinaryMediaStore } from "next-tinacms-cloudinary";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Head from 'next/head'
 import { useState, useEffect } from "react";
+import 'viewerjs/dist/viewer.css'
 
 const NEXT_PUBLIC_TINA_CLIENT_ID = '6bc4500a-bfd8-48ce-b542-838781add9a5' // process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
 const NEXT_PUBLIC_USE_LOCAL_CLIENT = 0

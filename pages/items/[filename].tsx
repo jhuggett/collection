@@ -3,7 +3,6 @@ import { TinaMarkdown } from 'tinacms/dist/rich-text'
 import { useRouter } from "next/router";
 import styled from "styled-components"
 import Viewer from 'viewerjs'
-import 'viewerjs/dist/viewer.css'
 import { useEffect } from "react";
 import { useTina } from "tinacms/dist/edit-state";
 
