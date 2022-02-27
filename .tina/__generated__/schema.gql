@@ -93,7 +93,7 @@ type Item {
   made: String
   found: ItemFound
   images: [ItemImages]
-  description: String
+  description: JSON
   tags: [String]
 }
 
@@ -119,7 +119,7 @@ type ItemConnection implements Connection {
 
 type Page {
   title: String
-  body: String
+  body: JSON
 }
 
 type PageDocument implements Node & Document {
@@ -171,13 +171,13 @@ input ItemMutation {
   made: String
   found: ItemFoundMutation
   images: [ItemImagesMutation]
-  description: String
+  description: JSON
   tags: [String]
 }
 
 input PageMutation {
   title: String
-  body: String
+  body: JSON
 }
 
 schema {

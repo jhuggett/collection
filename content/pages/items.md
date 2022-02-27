@@ -1,4 +1,4 @@
 ---
 title: Collection
 ---
-This is a curated **collection** of items I've found.
+A curated **collection** of items I've found.

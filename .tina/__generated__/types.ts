@@ -176,7 +176,7 @@ export type Item = {
   made?: Maybe<Scalars['String']>;
   found?: Maybe<ItemFound>;
   images?: Maybe<Array<Maybe<ItemImages>>>;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['JSON']>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
@@ -206,7 +206,7 @@ export type ItemConnection = Connection & {
 export type Page = {
   __typename?: 'Page';
   title?: Maybe<Scalars['String']>;
-  body?: Maybe<Scalars['String']>;
+  body?: Maybe<Scalars['JSON']>;
 };
 
 export type PageDocument = Node & Document & {
@@ -307,42 +307,42 @@ export type ItemMutation = {
   made?: InputMaybe<Scalars['String']>;
   found?: InputMaybe<ItemFoundMutation>;
   images?: InputMaybe<Array<InputMaybe<ItemImagesMutation>>>;
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['JSON']>;
   tags?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type PageMutation = {
   title?: InputMaybe<Scalars['String']>;
-  body?: InputMaybe<Scalars['String']>;
+  body?: InputMaybe<Scalars['JSON']>;
 };
 
-export type ItemPartsFragment = { __typename?: 'Item', name?: string | null, made?: string | null, description?: string | null, tags?: Array<string | null> | null, found?: { __typename: 'ItemFound', where?: string | null, when?: string | null } | null, images?: Array<{ __typename: 'ItemImages', myImage?: string | null } | null> | null };
+export type ItemPartsFragment = { __typename?: 'Item', name?: string | null, made?: string | null, description?: any | null, tags?: Array<string | null> | null, found?: { __typename: 'ItemFound', where?: string | null, when?: string | null } | null, images?: Array<{ __typename: 'ItemImages', myImage?: string | null } | null> | null };
 
-export type PagePartsFragment = { __typename?: 'Page', title?: string | null, body?: string | null };
+export type PagePartsFragment = { __typename?: 'Page', title?: string | null, body?: any | null };
 
 export type GetItemDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
 }>;
 
 
-export type GetItemDocumentQuery = { __typename?: 'Query', getItemDocument: { __typename?: 'ItemDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Item', name?: string | null, made?: string | null, description?: string | null, tags?: Array<string | null> | null, found?: { __typename: 'ItemFound', where?: string | null, when?: string | null } | null, images?: Array<{ __typename: 'ItemImages', myImage?: string | null } | null> | null } } };
+export type GetItemDocumentQuery = { __typename?: 'Query', getItemDocument: { __typename?: 'ItemDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Item', name?: string | null, made?: string | null, description?: any | null, tags?: Array<string | null> | null, found?: { __typename: 'ItemFound', where?: string | null, when?: string | null } | null, images?: Array<{ __typename: 'ItemImages', myImage?: string | null } | null> | null } } };
 
 export type GetItemListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetItemListQuery = { __typename?: 'Query', getItemList: { __typename?: 'ItemConnection', totalCount: number, edges?: Array<{ __typename?: 'ItemConnectionEdges', node?: { __typename?: 'ItemDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Item', name?: string | null, made?: string | null, description?: string | null, tags?: Array<string | null> | null, found?: { __typename: 'ItemFound', where?: string | null, when?: string | null } | null, images?: Array<{ __typename: 'ItemImages', myImage?: string | null } | null> | null } } | null } | null> | null } };
+export type GetItemListQuery = { __typename?: 'Query', getItemList: { __typename?: 'ItemConnection', totalCount: number, edges?: Array<{ __typename?: 'ItemConnectionEdges', node?: { __typename?: 'ItemDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Item', name?: string | null, made?: string | null, description?: any | null, tags?: Array<string | null> | null, found?: { __typename: 'ItemFound', where?: string | null, when?: string | null } | null, images?: Array<{ __typename: 'ItemImages', myImage?: string | null } | null> | null } } | null } | null> | null } };
 
 export type GetPageDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
 }>;
 
 
-export type GetPageDocumentQuery = { __typename?: 'Query', getPageDocument: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, body?: string | null } } };
+export type GetPageDocumentQuery = { __typename?: 'Query', getPageDocument: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, body?: any | null } } };
 
 export type GetPageListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPageListQuery = { __typename?: 'Query', getPageList: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, body?: string | null } } | null } | null> | null } };
+export type GetPageListQuery = { __typename?: 'Query', getPageList: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'PageDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Page', title?: string | null, body?: any | null } } | null } | null> | null } };
 
 export const ItemPartsFragmentDoc = gql`
     fragment ItemParts on Item {

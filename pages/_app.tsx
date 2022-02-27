@@ -6,9 +6,9 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Head from 'next/head'
 import { useState, useEffect } from "react";
 
-const NEXT_PUBLIC_TINA_CLIENT_ID = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
-const NEXT_PUBLIC_USE_LOCAL_CLIENT =
-  process.env.NEXT_PUBLIC_USE_LOCAL_CLIENT || 0;
+const NEXT_PUBLIC_TINA_CLIENT_ID = '6bc4500a-bfd8-48ce-b542-838781add9a5' // process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
+const NEXT_PUBLIC_USE_LOCAL_CLIENT = 0
+  // process.env.NEXT_PUBLIC_USE_LOCAL_CLIENT || 0;
 
 
 const themes = {
@@ -72,47 +72,27 @@ const App = ({ Component, pageProps }) => {
             isLocalClient={Boolean(Number(NEXT_PUBLIC_USE_LOCAL_CLIENT))}
             mediaStore={TinaCloudCloudinaryMediaStore}
             cmsCallback={(cms) => {
-              import("react-tinacms-editor").then(({ MarkdownFieldPlugin }) => {
-                cms.plugins.add(MarkdownFieldPlugin);
-              });
+              import("tinacms").then(({ RouteMappingPlugin }) => {
+                const RouteMapping = new RouteMappingPlugin(
+                  (collection, document) => {
+                    if (collection.name.includes('item')) {
+                      return `/items/${document.sys.filename}`;
+                    }
+                    return `/${collection.name}/${document.sys.filename}`;
+                  }
+                );
+                cms.plugins.add(RouteMapping);
+              })
+              cms.flags.set("tina-admin", true)
+              cms.flags.set("branch-switcher", true)
+              return cms
             }}
-            documentCreatorCallback={{
-              /**
-               * After a new document is created, redirect to its location
-               */
-              onNewDocument: ({ collection: { slug }, breadcrumbs }) => {
-                let addSlug = slug == "page" ? '' : `/${slug}`
-                if (addSlug == '/item') addSlug = '/items'
-                const relativeUrl = `${addSlug}/${breadcrumbs.join("/")}`;
-                return (window.location.href = relativeUrl);
-              },
-              /**
-               * Only allows documents to be created to the `Blog Posts` Collection
-               */
-              filterCollections: (options) => {
-                return options
-              },
-            }}
-            /**
-             * Treat the Global collection as a global form
-             */
-            formifyCallback={({ formConfig, createForm, createGlobalForm }) => {
-              if (formConfig.id === "getGlobalDocument") {
-                return createGlobalForm(formConfig);
-              }
-
-              return createForm(formConfig);
-            }}
-            {...pageProps}
           >
-            {(livePageProps) => (
-              
-                <Component themeConfig={themeConfig} {...livePageProps} />
-            )}
+            <Component themeConfig={themeConfig} {...pageProps} />
           </TinaCMS>
         }
       >
-          <Component themeConfig={themeConfig} {...pageProps} />
+        <Component themeConfig={themeConfig} {...pageProps} />
       </TinaEditProvider>
     </ThemeProvider>
   );
@@ -133,6 +113,7 @@ const GlobalTheme = createGlobalStyle`
     height: 100%;
     width: 100%;
     overflow-x: hidden;
+    box-sizing: border-box;
     --tina-color-primary-light: ${p => p.theme.tina.primary};;
     --tina-color-primary: ${p => p.theme.tina.primary};;
     --tina-color-primary-dark: ${p => p.theme.tina.primary};;
